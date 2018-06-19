@@ -1,0 +1,13 @@
+div.col-md-12.tabApp{
+    margin-top:5%;
+}
+
+@media screen and (max-width: 640px) {
+    div.col-md-12.tabApp[_ngcontent-c0] {
+        padding: 0px!important;
+    }
+    tabApp .col-md-12{
+        margin:0px;
+        padding:0px;    
+    }
+  }
