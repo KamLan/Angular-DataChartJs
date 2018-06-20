@@ -3,7 +3,7 @@
        <div class="col-md-12" >
             <form ng-app="example">
                 <div class="form-group" data-ng-controller="JourController as jour">
-                    <label for="exampleInputJour">Choix du jour</label>
+                    <label for="exampleInputJour">Choix du jour </label>
                     <input type="date" #dateInput name="dateInput" id="dateInput" class="form-control" value="2018-05-25"  (change)="getDay(dateInput.value)">
                 </div>
             </form>
@@ -71,6 +71,9 @@
                 <div class="row">
                     <div class="col-md-12 d-inline-block chart-line">
                         <canvas id="myChart"></canvas>
+                    </div>
+                    <div class="col-md-12 d-inline-block chart-line">
+                        <canvas id="myChartbar"></canvas>
                     </div>
                     <div class="col-md-12 d-inline-block chart-line">
                         <canvas id="myChart2"></canvas>

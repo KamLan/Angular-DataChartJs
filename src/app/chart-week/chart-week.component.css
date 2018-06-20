@@ -1,0 +1,90 @@
+canvas{
+    width:80% !important;
+    margin-left:10%;
+}
+
+div{
+    text-align: center;
+}
+div.container{
+    margin-bottom:5%;
+}
+
+div.col-md-6 canvas{
+    width:100% !important;
+    margin-left: 0%;
+}
+
+div[_ngcontent-c1] {
+    text-align: center;
+    width: 100% !important;
+}
+
+.NumberIcon{
+    width: 25% !important;
+    margin-left: 37.5%;
+    margin-top: 5%;
+}
+
+.row div.col-md-3.col-3 div.card{
+    min-height:150px;
+}
+
+.display {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+.chart-line{
+    min-height:600px;
+}
+
+.chart-pie{
+    min-height:150px;
+}
+
+@media screen and (max-width: 640px) {
+    div.col-md-12.tabApp[_ngcontent-c0] {
+        padding: 0px!important;
+    }
+    .container{
+        padding:0;
+    }
+    .row{
+        margin:0;
+    }
+    .col-md-4.col-4{
+        padding:0;
+    }
+    .col-md-3.col-3{
+        padding:0;
+    }
+    .col-md-3.col-3 .card-body{
+        padding:0;
+    }
+    .card{
+        width:100% !important;
+        min-height: 225px;
+    }
+    .graphsection{
+        margin:0px;
+        padding:0px;
+    }
+    .graphsection div{
+        margin:0px;
+        padding:0px;
+    }
+    .NumberIcon{
+        margin-top: 20%;
+    }
+    div.charts-container{
+        padding:0px;
+    }
+    canvas{
+        width:100% !important;
+        margin-left:0px;
+    }
+  }

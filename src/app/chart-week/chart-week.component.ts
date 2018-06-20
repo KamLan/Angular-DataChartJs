@@ -8,70 +8,42 @@ import { zoom } from 'chartjs-plugin-zoom';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 var chartjsPluginDatalabels = require("chartjs-plugin-datalabels")
-//var chartjsPluginZoom = require("chartjs-plugin-zoom")
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+  selector: 'app-chart-week',
+  templateUrl: './chart-week.component.html',
+  styleUrls: ['./chart-week.component.css']
 })
-export class ChartComponent implements OnInit {
+export class ChartWeekComponent implements OnInit {
+
+  constructor() { }
 
   canvas: any;
-  graph:number = 1;
   ctx: any;
-
-  //date
-  DateInputcur = "25/05/18";
-  DateInputpre = "25/05/17";
-
-  //chart refresh
+  graph:number = 1;
   myChart;
   myChart2;
   myChart3;
-  myChartbar;
 
-  //charts
-  CANFtotalpre = 0;
-  CAFidtotalpre = 0;
-  CAFidtotalcur = 0;
-  CANFtotalcur = 0;
-  CATotalcur =0;
-  CATotalpre =0;
+  arrayJourSemaines;
+  arrayDCAjours;
+  arrayDCCjours;
+  arrayDPjours;
+
+  CAtotal;
+  ClientTotal;
+  PanierTotal;
   CAtotalVar;
-  ClientTotalPreNF = 0;
-  ClientTotalPreFid = 0;
-  ClientTotalCurNF = 0;
-  ClientTotalCurFid = 0;
-  ClientTotalpre = 0;
-  ClientTotalcur = 0;
   ClientTotalVar;
-  PanierMoyPre;
-  PanierMoyCur;
   PanierTotalVar;
-  //donnees
-  //CA
-  DCANFpre = []; 
-  DCAFidpre = [];
-  DCANFcur = [];
-  DCAFidcur = [];
-  DCApre;
-  DCAcur;
-  DCAVar;
-  tabDCApre = [];
-  tabDCAcur = [];
-  tabDCAVar = [];
-  arrayDCAhoraires = [];
-  //Client
-  DClientpre;
-  DClientcur;
-  arrayDClienthoraires = [];
-  //Panniers
-  Dpanpre;
-  Dpancur;
-  arrayDpanhoraires = [];
-  dataImport: String [];
+
+  tabCANFtotalcur
+  tabCAFidtotalcur 
+  tabClientTotalPreNF 
+  tabClientTotalPreFid 
+
   data = [
+
     {
       "CDSRVMAG": 83851,
       "DTENCTCK": "25/05/17",
@@ -2221,266 +2193,74 @@ export class ChartComponent implements OnInit {
       "CACaisse": "529,36",
       "CACaisseCarteFid": "185,05",
       "CACaisseCartePaiement": 0,
-      "UVCCaisse": 190, //articles
+      "UVCCaisse": 190, 
       "UVCCaisseCarteFid": 55,
       "UVCCaisseCartePaiement": 0,
-      "NbTicket": 29, //clients
+      "NbTicket": 29, 
       "NbTicketCarteFid": 5,
       "NbTicketCartePaiement": 0
     }
-  ];
+]
 
-  constructor(private httpService: HttpClient) {
-  }
 
-  ngOnInit() {
-    this.graph = 1;
-    
-    //load data.json
-    this.httpService.get('./assets/data.json').subscribe(
-      data => {
-        this.dataImport = data as any;	
-        console.log(this.dataImport);
-      },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      }
-    );
-    
-    this.calculus("25/05/18", "25/05/17")
-  }
-  
   // display graph or numbers  
   displayGraph(_graph:number){
     this.graph=_graph;
   }
 
-  // get day from input 
-  getDay(event) { 
-    var dateInputInter = event.slice(-8);
-    var year = dateInputInter.slice(0, 2);
-    var month = dateInputInter.slice(3, 5);
-    var day = dateInputInter.slice(6, 8);
-    var DateInputCurEL = day + "/" + month + "/" + year;
-    var str = parseInt(DateInputCurEL.slice(-2));
-    var str1 = str - 1;
-    var DateInputPreEL = DateInputCurEL.slice(0, -2) + str1;
-    this.DateInputpre=DateInputPreEL;
-    this.DateInputcur=DateInputCurEL;
-    this.myChart.destroy();
-    this.myChart2.destroy();
-    this.myChart3.destroy();
-    this.calculus(DateInputPreEL, DateInputCurEL);
-  }
+  // getDateRangeOfWeek(weekNo){
+  //   var d1 = new Date();
+  //   var numOfdaysPastSinceLastMonday = eval(d1.getDay()- 1);
+  //   d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
+  //   var weekNoToday = d1.getWeek();
+  //   var weeksInTheFuture = eval( weekNo - weekNoToday );
+  //   d1.setDate(d1.getDate() + eval( 7 * weeksInTheFuture ));
+  //   var rangeIsFrom = eval(d1.getMonth()+1) +"/" + d1.getDate() + "/" + d1.getFullYear();
+  //   d1.setDate(d1.getDate() + 6);
+  //   var rangeIsTo = eval(d1.getMonth()+1) +"/" + d1.getDate() + "/" + d1.getFullYear() ;
+  //   return rangeIsFrom + " to "+rangeIsTo;
+  // };
 
-  calculus(datepre:string,datecur:string){
-    var CANFpre = [];
-    var CANFcur = [];
-    var PanierPre = [];
-    var PanierCur = [];
-    var CAfidpre = [];
-    var CAfidcur = [];
-    var CAfidnonfidPre = [];
-    var CAfidnonfiCur = [];
-    var ClientPreNF = [];
-    var ClientPreFid = [];
-    var ClientCurNF = [];
-    var ClientCurFid = [];
+  // getWeek = function() {
+  //   var onejan = new Date(this.getFullYear(),0,1);
+  //   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+  // }
 
-     //TRI DATA UNE JOURNEE
-     for(var i=0; i<154; i++){
-      if(this.data[i].DTENCTCK==datepre){
-        //get CA par caisse année précedente 
-          var newValue = this.data[i].CACaisse.toString().replace(",",".")
-          var newValueFid = this.data[i].CACaisseCarteFid.toString().replace(",",".")
-          CANFpre[0]=null;
-          CANFpre.push(newValue);
-          CAfidpre[0] = null
-          CAfidpre.push(newValueFid);
+  calculusWeek(){
 
-        //calcul total CA NF
-          var CANFinter:any = parseFloat(this.data[i].CACaisse);
-          this.CANFtotalpre = this.CANFtotalpre + CANFinter;
-          var tabCANFtotalpre = this.CANFtotalpre;
+    var CANFpre = [null, "557", "569", "472", "358", "822", "603", "215" ]
+    var CAfidpre = [null, "626", "578", "469", "605", "720", "735", "329" ]
+    var CAfidcur = [null, "115", "70", "259", "162", "388", "247", "391" ]
+    var CANFcur = [null, "66", "323", "151", "91", "130", "390", "162"]
+    var ClientPreNF = [null, "323", "399", "265", "231", "313", "207", "70"]
+    var ClientPreFid = [null, "77", "44", "54", "23", "44", "72", "11"]
+    var ClientCurNF = [null, "314", "396", "351", "223", "250", "258", "52"]
+    var ClientCurFid = [null, "71", "40", "80", "34", "18", "65", "16"]
+    var PanierPre = [null, "8.4", "12.3", "6.9", "14.4", "7.5", "18.6", "8"]
+    var PanierCur = [null, "5.6", "7.8", "14.5", "5.8", "12.3", "20.5", "6.7"]
+    var tabCANFtotalcur = ["25678" ]
+    var tabCAFidtotalcur = ["2407" ]
+    var tabClientTotalPreNF = ["1178" ]
+    var tabClientTotalPreFid = ["164" ]
 
-        //calcul total CA Fid
-          var FidToString = this.data[i].CACaisseCarteFid.toString();
-          var CAFIDinter:any = parseFloat(FidToString);
-          this.CAFidtotalpre = this.CAFidtotalpre + CAFIDinter;
-          var tabCAFidtotalpre = this.CAFidtotalpre;
+    this.CAtotal = "28678";
+    this.ClientTotal = "1325";
+    this.PanierTotal = "10,4";
+    this.CAtotalVar = "-15";
+    this.ClientTotalVar = "2";
+    this.PanierTotalVar = "-1,5";
 
-        //get nombre clients
-          var newValueC = this.data[i].NbTicket.toString();
-          var newValueCFid = this.data[i].NbTicketCarteFid.toString();
-          ClientPreFid[0]=null;
-          ClientPreNF[0]=null
-          ClientPreNF.push(newValueC);
-          ClientPreFid.push(newValueCFid);
+    this.arrayJourSemaines=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    this.arrayDCAjours=[["557","10"],["569","-5"],["472","12"],["358","6"],["822","-2"],["603","15"],["215","-3"]];
+    this.arrayDCCjours=[["323","24"],["399","-30"],["265","14"],["231","25"],["313","-6"],["207","-10"],["70","5"]];
+    this.arrayDPjours=[["8.4","0.5"],["12.3","-2"],["6.9","12"],["14.4","6"],["7.5","-3"],["18.6","7"],["8","4"]];
 
-        //calcul total clients NF
-          var ClientInterNF:number = this.data[i].NbTicket;
-          this.ClientTotalPreNF = this.ClientTotalPreNF + ClientInterNF;
-          var tabClientTotalPreNF = this.ClientTotalPreNF;
-
-        //calcul total clients Fid  
-          var CLientInterFidPre:number = this.data[i].NbTicketCarteFid;
-          this.ClientTotalPreFid = this.ClientTotalPreFid + CLientInterFidPre;
-          var tabClientTotalPreFid = this.ClientTotalPreFid;
-
-        //get paniers
-          var panierCA = parseInt(newValue) + parseInt(newValueFid);
-          var panierClient = this.data[i].NbTicket + this.data[i].NbTicketCarteFid;
-          var panierValue =  panierCA / panierClient;
-          PanierPre[0]=null
-          PanierPre.push(panierValue.toFixed(2));
-      }
-      if(this.data[i].DTENCTCK==datecur){
-        //get CA par caisse année courante
-          var newValue = this.data[i].CACaisse.toString().replace(",",".");
-          var newValueFid = this.data[i].CACaisseCarteFid.toString().replace(",",".")
-          CANFcur[0]= null;
-          CANFcur.push(newValue);
-          CAfidcur[0]=null;
-          CAfidcur.push(newValueFid);
-
-        //calcul total CA Classique
-          var CANFinter:any = parseFloat(this.data[i].CACaisse)
-          this.CANFtotalcur = this.CANFtotalcur + CANFinter;
-          var tabCANFtotalcur = this.CANFtotalcur;
-
-        //calcul total CA Fid
-          var FidToString = this.data[i].CACaisseCarteFid.toString();
-          var CAFIDinter:any = parseFloat(FidToString);
-          this.CAFidtotalcur = this.CAFidtotalcur + CAFIDinter;
-          var tabCAFidtotalcur = this.CAFidtotalcur;
-
-        //get nombre clients
-          var newValueC = this.data[i].NbTicket.toString();
-          var newValueCFid = this.data[i].NbTicketCarteFid.toString();
-          ClientCurNF[0]=null
-          ClientCurFid[0]=null
-          ClientCurNF.push(newValue);
-          ClientCurFid.push(newValueFid);
-
-        //calcul total clients NF
-          var ClientInterCur:any = this.data[i].NbTicket;
-          this.ClientTotalCurNF = this.ClientTotalCurNF + ClientInterCur;
-          var tabClientTotalCurNF = this.ClientTotalCurNF;
-
-        //calcul total clients Fid 
-          var ClientInterFidCur:any = this.data[i].NbTicketCarteFid;
-          this.ClientTotalCurFid = this.ClientTotalCurFid + ClientInterFidCur;
-          var tabClientTotalCurFid = this.ClientTotalCurFid;
-
-        //get paniers
-          var panierCA = parseInt(newValue) + parseInt(newValueFid);
-          var panierClient = this.data[i].NbTicket + this.data[i].NbTicketCarteFid;
-          var panierValue =  panierCA / panierClient;
-          PanierCur[0]=null
-          PanierCur.push(panierValue.toFixed(2));
-      }
-  }
-
-  //calcul total CA
-    this.CATotalpre = this.CANFtotalpre + this.CAFidtotalpre;
-    this.CATotalcur = this.CANFtotalcur + this.CAFidtotalcur;
-    
-
-  //calcul total clients
-    this.ClientTotalpre = this.ClientTotalPreFid + this.ClientTotalPreNF;
-    this.ClientTotalcur = this.ClientTotalCurFid + this.ClientTotalCurNF;
-    
-  //calcul variation CA     
-    var variation= (this.CATotalcur - this.CATotalpre) / this.CATotalpre * 100; 
-    this.CAtotalVar = variation.toFixed(2);
-
-  //calcul variation client
-    var variationClient = (this.ClientTotalcur - this.ClientTotalpre) / this.ClientTotalpre * 100;
-    this.ClientTotalVar = variationClient.toFixed(2);
-
-  //calcul panier moyen pre
-    function getSum(total, num) {
-      return total + Math.round(num);
-    }
-    var panierMoyInterPre = PanierPre.reduce(getSum, 0) / 12;
-    this.PanierMoyPre = panierMoyInterPre.toFixed(2);
-
-  //calcul panier moyen cur
-    var panierMoyInterCur = PanierCur.reduce(getSum, 0) / 12;
-    this.PanierMoyCur = panierMoyInterCur.toFixed(2);
-
-  //calcul variation pannier
-    var variationPanier = (this.PanierMoyCur - this.PanierMoyPre) / this.PanierMoyPre * 100;
-    this.PanierTotalVar = variationPanier.toFixed(2);
-
-  //Annulation variables
-    this.CANFtotalpre = 0
-    this.CAFidtotalpre = 0
-    this.CANFtotalcur = 0
-    this.CAFidtotalcur = 0
-    this.ClientTotalPreFid = 0 
-    this.ClientTotalPreNF = 0
-    this.ClientTotalCurFid = 0 
-    this.ClientTotalCurNF = 0
-
-    //DONNEES BRUTES
-    this.arrayDCAhoraires = [];
-    this.arrayDClienthoraires = [];
-    this.arrayDpanhoraires = [];
-    this.DCANFpre = CANFpre; 
-    this.DCAFidpre = CAfidpre;
-    this.DCANFcur = CANFcur;
-    this.DCAFidcur = CAfidcur;
-
-  //calcul CA par heure
-    for(var i=0; i<12; i++){
-      var heure = i + 8;
-      this.DCApre = parseInt(this.DCANFcur[i]) + parseInt(this.DCAFidcur[i]);
-      this.tabDCApre.push(this.DCApre);
-      this.DCAcur = parseInt(this.DCANFpre[i]) + parseInt(this.DCAFidpre[i]); 
-      this.tabDCAcur.push(this.DCAcur);
-      var calcul = (this.DCAcur - this.DCApre) / this.DCApre * 100
-      this.DCAVar = calcul.toFixed(2);
-      this.tabDCAVar.push(this.DCAVar);
-      var tabCompactCA = [];
-      tabCompactCA.push(heure, this.DCApre, this.DCAcur, this.DCAVar);
-      this.arrayDCAhoraires.push(tabCompactCA);
-    }
-
-  //calcul client par heure
-    for(var i=0; i<12; i++){
-      var heure = i + 8;
-      this.DClientcur = parseInt(ClientCurNF[i]) + parseInt(ClientCurFid[i])
-      this.DClientpre = parseInt(ClientPreNF[i]) + parseInt(ClientPreFid[i])
-      var calculClient = ((this.DClientcur - this.DClientpre) / this.DClientpre * 100).toFixed(2);  
-      var tabCompactClient = [];
-      tabCompactClient.push(heure, this.DClientpre, this.DClientcur, calculClient);
-      this.arrayDClienthoraires.push(tabCompactClient);
-    }
-    
-  //calcul panier par heure
-    for(var i=0; i<12; i++){
-      var heure = i + 8;
-      this.Dpancur= parseInt(PanierCur[i]);
-      this.Dpanpre= parseInt(PanierPre[i]);
-      var calculPanier = ((PanierCur[i] - PanierPre[i]) / PanierPre[i] *100).toFixed(2);
-      var tabCompactPanier = [];
-      tabCompactPanier.push(heure, this.Dpanpre, this.Dpancur, calculPanier);
-      this.arrayDpanhoraires.push(tabCompactPanier);
-    }
-
-    //Delete first null entry
-     this.arrayDCAhoraires.shift();
-     this.arrayDClienthoraires.shift();
-     this.arrayDpanhoraires.shift();
-
-    //CHARTS DEFINITION
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
     this.myChart = new Chart(this.ctx, {
       type: 'line',
       data: {
-          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
+          labels: ["0", "Lundi", "Mardi", "Mercredi", "Jeudi", "VEndredi", "Samedi", "Dimanche"],
           datasets: [{
               label: 'CA NF prec year',
               data: CANFpre,
@@ -2575,112 +2355,12 @@ export class ChartComponent implements OnInit {
 				},
       } 
   }); 
-  this.canvas = document.getElementById('myChartbar');
-  this.ctx = this.canvas.getContext('2d');
-  this.myChartbar = new Chart(this.ctx, {
-    type: 'bar',
-    data: {
-        labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
-        datasets: [{
-            label: 'CA NF prec year',
-            data: CANFpre,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0)',
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-          ],
-            borderWidth: 1
-        },
-        {
-          label: 'CA Fid prec year',
-          data: CAfidpre,
-          backgroundColor: [
-            'rgba(255, 206, 86, 0)',
-          ],
-          borderColor: [
-            'rgba(255, 206, 86, 1)',
-        ],
-          borderWidth: 1
-      },
-        {
-            label: "CA Fid cur year",
-            data: CAfidcur,
-            backgroundColor: [
-              'rgba(54, 162, 235, 0)',
-
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)',
-              
-          ],
-            borderWidth: 1
-        },
-        {
-          label: "CA NF cur year ",
-          data: CANFcur,
-          backgroundColor: [
-            'rgba(75, 192, 192, 0)',
-
-          ],
-          borderColor: [
-            'rgba(75, 192, 192, 1)',
-            
-        ],
-          borderWidth: 1
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Comparaison des CA'
-      },
-      maintainAspectRatio: false,
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      },
-      plugins: {
-        datalabels: {
-          backgroundColor: function(context) {
-            return context.hovered ? context.dataset.backgroundColor : 'white';
-          },
-          borderColor: function(context) {
-            return context.dataset.backgroundColor;
-          },
-          borderRadius: 16,
-          borderWidth: 1,
-          color: function(context) {
-            return context.hovered ? 'white' : context.dataset.backgroundColor;
-          },
-          font: {
-            weight: 'bold'
-          },
-          offset: 8,
-          formatter: Math.round,
-          listeners: {
-            enter: function(context) {
-              context.hovered = true;
-              return true;
-            },
-            leave: function(context) {
-              context.hovered = false;
-              return true;
-            }
-          }
-        }
-      },
-    } 
-}); 
     this.canvas = document.getElementById('myChart2');
     this.ctx = this.canvas.getContext('2d');
     this.myChart2 = new Chart(this.ctx, {
       type: 'line',
       data: {
-          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
+          labels: ["0", "Lundi", "Mardi", "Mercredi", "Jeudi", "VEndredi", "Samedi", "Dimanche"],
           datasets: [{
               label: 'Clients NF prec year',
               data: ClientPreNF,
@@ -2785,7 +2465,7 @@ export class ChartComponent implements OnInit {
     this.myChart3 = new Chart(this.ctx, {
       type: 'line',
       data: {
-          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
+          labels: ["0", "Lundi", "Mardi", "Mercredi", "Jeudi", "VEndredi", "Samedi", "Dimanche"],
           datasets: [{
               label: 'Panniers année précédente',
               data: PanierPre,
@@ -2906,28 +2586,6 @@ export class ChartComponent implements OnInit {
       }
   });
 
-  // this.canvas = document.getElementById('myChart5');
-  //   this.ctx = this.canvas.getContext('2d');
-  //   let myChart5 = new Chart(this.ctx, {
-  //     type: 'pie',
-  //     data: {
-  //       labels: ["CANF", "CAFid"],
-  //       datasets: [
-  //         {
-  //           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-  //           data: [tabCANFtotalpre, tabCAFidtotalpre]
-  //         }
-  //       ]
-  //     },
-  //     options: {
-  //       title: {
-  //         display: true,
-  //         text: 'Difference CA Fid/NF precedent year'
-  //       },
-  //       maintainAspectRatio: false,
-  //     }
-  // });
-
   this.canvas = document.getElementById('myChart6');
     this.ctx = this.canvas.getContext('2d');
     let myChart6 = new Chart(this.ctx, {
@@ -2971,28 +2629,30 @@ export class ChartComponent implements OnInit {
       }
   });
 
-  // this.canvas = document.getElementById('myChart7');
-  //   this.ctx = this.canvas.getContext('2d');
-  //   let myChart7 = new Chart(this.ctx, {
-  //     type: 'pie',
-  //     data: {
-  //       labels: ["Clients NF", "Clients Fid"],
-  //       datasets: [
-  //         {
-  //           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-  //           data: [tabClientTotalCurNF, tabClientTotalCurFid]
-  //         }
-  //       ]
-  //     },
-  //     options: {
-  //       title: {
-  //         display: true,
-  //         text: 'Difference Clients Fid/NF precedent year'
-  //       },
-  //       maintainAspectRatio: false,
-  //     }
-  // });
+  }
 
-  }             
+  getWeek(event){
+    console.log(event);
+    if(event=="2018-W23"){
+      
+       
+    }
+    if(event=="2018-W24"){
+      
+       
+    }
+    if(event=="2018-W25"){
+      
+       
+    }
+    if(event=="2018-W26"){
+      
+       
+    }
+  }
+
+  ngOnInit() {
+    this.calculusWeek();
+  }
 
 }
