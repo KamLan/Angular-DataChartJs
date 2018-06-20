@@ -2280,7 +2280,9 @@ export class ChartComponent implements OnInit {
         //get CA par caisse année précedente 
           var newValue = this.data[i].CACaisse.toString().replace(",",".")
           var newValueFid = this.data[i].CACaisseCarteFid.toString().replace(",",".")
+          CANFpre[0]=null;
           CANFpre.push(newValue);
+          CAfidpre[0] = null
           CAfidpre.push(newValueFid);
 
         //calcul total CA NF
@@ -2297,6 +2299,8 @@ export class ChartComponent implements OnInit {
         //get nombre clients
           var newValueC = this.data[i].NbTicket.toString();
           var newValueCFid = this.data[i].NbTicketCarteFid.toString();
+          ClientPreFid[0]=null;
+          ClientPreNF[0]=null
           ClientPreNF.push(newValueC);
           ClientPreFid.push(newValueCFid);
 
@@ -2314,13 +2318,16 @@ export class ChartComponent implements OnInit {
           var panierCA = parseInt(newValue) + parseInt(newValueFid);
           var panierClient = this.data[i].NbTicket + this.data[i].NbTicketCarteFid;
           var panierValue =  panierCA / panierClient;
+          PanierPre[0]=null
           PanierPre.push(panierValue.toFixed(2));
       }
       if(this.data[i].DTENCTCK==datecur){
         //get CA par caisse année courante
           var newValue = this.data[i].CACaisse.toString().replace(",",".");
           var newValueFid = this.data[i].CACaisseCarteFid.toString().replace(",",".")
+          CANFcur[0]= null;
           CANFcur.push(newValue);
+          CAfidcur[0]=null;
           CAfidcur.push(newValueFid);
 
         //calcul total CA Classique
@@ -2337,6 +2344,8 @@ export class ChartComponent implements OnInit {
         //get nombre clients
           var newValueC = this.data[i].NbTicket.toString();
           var newValueCFid = this.data[i].NbTicketCarteFid.toString();
+          ClientCurNF[0]=null
+          ClientCurFid[0]=null
           ClientCurNF.push(newValue);
           ClientCurFid.push(newValueFid);
 
@@ -2354,6 +2363,7 @@ export class ChartComponent implements OnInit {
           var panierCA = parseInt(newValue) + parseInt(newValueFid);
           var panierClient = this.data[i].NbTicket + this.data[i].NbTicketCarteFid;
           var panierValue =  panierCA / panierClient;
+          PanierCur[0]=null
           PanierCur.push(panierValue.toFixed(2));
       }
   }
@@ -2446,11 +2456,10 @@ export class ChartComponent implements OnInit {
       this.arrayDpanhoraires.push(tabCompactPanier);
     }
 
-    //Reinit charts
-    
-    // if (this.myChart != 'undefined') {
-    //   this.myChart.destroy();
-    // }
+    //Delete first null entry
+     this.arrayDCAhoraires.shift();
+     this.arrayDClienthoraires.shift();
+     this.arrayDpanhoraires.shift();
 
     //CHARTS DEFINITION
     this.canvas = document.getElementById('myChart');
@@ -2458,7 +2467,7 @@ export class ChartComponent implements OnInit {
     this.myChart = new Chart(this.ctx, {
       type: 'line',
       data: {
-          labels: ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
+          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
           datasets: [{
               label: 'CA NF prec year',
               data: CANFpre,
@@ -2558,7 +2567,7 @@ export class ChartComponent implements OnInit {
     this.myChart2 = new Chart(this.ctx, {
       type: 'line',
       data: {
-          labels: ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
+          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
           datasets: [{
               label: 'Clients NF prec year',
               data: ClientPreNF,
@@ -2663,7 +2672,7 @@ export class ChartComponent implements OnInit {
     this.myChart3 = new Chart(this.ctx, {
       type: 'line',
       data: {
-          labels: ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
+          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
           datasets: [{
               label: 'Panniers année précédente',
               data: PanierPre,
