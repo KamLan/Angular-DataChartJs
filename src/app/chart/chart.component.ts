@@ -5,7 +5,7 @@ import { labels } from 'chartjs-plugin-datalabels';
 import { zoom } from 'chartjs-plugin-zoom';
 
 var chartjsPluginDatalabels = require("chartjs-plugin-datalabels")
-var chartjsPluginZoom = require("chartjs-plugin-zoom")
+//var chartjsPluginZoom = require("chartjs-plugin-zoom")
 
 @Component({
   selector: 'app-chart',
@@ -25,6 +25,7 @@ export class ChartComponent implements OnInit {
   //chart refresh
   myChart;
   myChart2;
+  myChart3;
 
   //charts
   CANFtotalpre = 0;
@@ -2246,6 +2247,9 @@ export class ChartComponent implements OnInit {
     var DateInputPreEL = DateInputCurEL.slice(0, -2) + str1;
     this.DateInputpre=DateInputPreEL;
     this.DateInputcur=DateInputCurEL;
+    this.myChart.destroy();
+    this.myChart2.destroy();
+    this.myChart3.destroy();
     this.calculus(DateInputPreEL, DateInputCurEL);
   }
 
@@ -2441,6 +2445,12 @@ export class ChartComponent implements OnInit {
       tabCompactPanier.push(heure, this.Dpanpre, this.Dpancur, calculPanier);
       this.arrayDpanhoraires.push(tabCompactPanier);
     }
+
+    //Reinit charts
+    
+    // if (this.myChart != 'undefined') {
+    //   this.myChart.destroy();
+    // }
 
     //CHARTS DEFINITION
     this.canvas = document.getElementById('myChart');
@@ -2650,7 +2660,7 @@ export class ChartComponent implements OnInit {
   
   this.canvas = document.getElementById('myChart3');
     this.ctx = this.canvas.getContext('2d');
-    let myChart3 = new Chart(this.ctx, {
+    this.myChart3 = new Chart(this.ctx, {
       type: 'line',
       data: {
           labels: ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
