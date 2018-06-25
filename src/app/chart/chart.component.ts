@@ -80,8 +80,6 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
 
-    
-
     this.graph = 1;
     
     this.calculus("25/05/18", "25/05/17")
@@ -319,51 +317,35 @@ export class ChartComponent implements OnInit {
       data: {
           labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
           datasets: [{
-              label: 'CA NF prec year',
-              data: CANFpre,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0)',
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-            ],
-              borderWidth: 1
+            label: 'CA NF prec year',
+            data: CANFpre,
+            backgroundColor: ["navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy"],
+            borderColor: ["navy"],
+            borderWidth: 1,
+            fill: false
           },
           {
             label: 'CA Fid prec year',
             data: CAfidpre,
-            backgroundColor: [
-              'rgba(255, 206, 86, 0)',
-            ],
-            borderColor: [
-              'rgba(255, 206, 86, 1)',
-          ],
+            fill: false, 
+            backgroundColor: ["red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red"],
+            borderColor: ["red"],
             borderWidth: 1
         },
           {
-              label: "CA Fid cur year",
-              data: CAfidcur,
-              backgroundColor: [
-                'rgba(54, 162, 235, 0)',
-
-              ],
-              borderColor: [
-                'rgba(54, 162, 235, 1)',
-                
-            ],
-              borderWidth: 1
+            label: "CA Fid cur year",
+            data: CAfidcur,
+            fill: false, 
+            backgroundColor: ["orange", "orange", "orange", "orange", "orange", "orange","orange", "orange", "orange", "orange", "orange", "orange", "orange"],
+            borderColor: ["orange"],
+            borderWidth: 1
           },
           {
             label: "CA NF cur year ",
             data: CANFcur,
-            backgroundColor: [
-              'rgba(75, 192, 192, 0)',
-
-            ],
-            borderColor: [
-              'rgba(75, 192, 192, 1)',
-              
-          ],
+            fill: false, 
+            backgroundColor: ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green','green', "green"],
+            borderColor: ['green'],
             borderWidth: 1
         }]
       },
@@ -412,106 +394,88 @@ export class ChartComponent implements OnInit {
 				},
       } 
   }); 
-  this.canvas = document.getElementById('myChartbar');
-  this.ctx = this.canvas.getContext('2d');
-  this.myChartbar = new Chart(this.ctx, {
-    type: 'bar',
-    data: {
-        labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
-        datasets: [{
-            label: 'CA NF prec year',
-            data: CANFpre,
-            backgroundColor: [
-              '#3e95cd',
-            ],
-            borderColor: [
-              '#3e95cd',
-          ],
+
+    this.canvas = document.getElementById('myChartbar');
+    this.ctx = this.canvas.getContext('2d');
+    this.myChartbar = new Chart(this.ctx, {
+      type: 'bar',
+      data: {
+          labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
+          datasets: [{
+              label: 'CA NF prec year',
+              data: CANFpre,
+              backgroundColor: ["navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy"],
+              borderColor: ["navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy"],
+              borderWidth: 1
+          },
+          {
+            label: 'CA Fid prec year',
+            data: CAfidpre,
+            backgroundColor: ["red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red"],
+            borderColor: ["red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red"],
             borderWidth: 1
         },
-        {
-          label: 'CA Fid prec year',
-          data: CAfidpre,
-          backgroundColor: [
-            '#8e5ea2',
-          ],
-          borderColor: [
-            '#8e5ea2',
-        ],
-          borderWidth: 1
-      },
-        {
-            label: "CA Fid cur year",
-            data: CAfidcur,
-            backgroundColor: [
-              "#3cba9f",
-
-            ],
-            borderColor: [
-              '#3cba9f',
-              
-          ],
+          {
+              label: "CA Fid cur year",
+              data: CAfidcur,
+              backgroundColor: ["orange", "orange", "orange", "orange", "orange", "orange","orange", "orange", "orange", "orange", "orange", "orange", "orange"],
+              borderColor: ["orange", "orange", "orange", "orange", "orange", "orange","orange", "orange", "orange", "orange", "orange", "orange", "orange"],
+              borderWidth: 1
+          },
+          {
+            label: "CA NF cur year ",
+            data: CANFcur,
+            backgroundColor: ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green','green', "green"],
+            borderColor: ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green','green', "green"],
             borderWidth: 1
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Comparaison des CA'
         },
-        {
-          label: "CA NF cur year ",
-          data: CANFcur,
-          backgroundColor: [
-            '#e8c3b9',
-
-          ],
-          borderColor: [
-            '#e8c3b9',
-            
-        ],
-          borderWidth: 1
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Comparaison des CA'
-      },
-      maintainAspectRatio: false,
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      },
-      plugins: {
-        datalabels: {
-          backgroundColor: function(context) {
-            return context.hovered ? context.dataset.backgroundColor : 'white';
-          },
-          borderColor: function(context) {
-            return context.dataset.backgroundColor;
-          },
-          borderRadius: 16,
-          borderWidth: 1,
-          color: function(context) {
-            return context.hovered ? 'white' : context.dataset.backgroundColor;
-          },
-          font: {
-            weight: 'bold'
-          },
-          offset: 8,
-          formatter: Math.round,
-          listeners: {
-            enter: function(context) {
-              context.hovered = true;
-              return true;
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        plugins: {
+          datalabels: {
+            backgroundColor: function(context) {
+              return context.hovered ? context.dataset.backgroundColor : 'white';
             },
-            leave: function(context) {
-              context.hovered = false;
-              return true;
+            borderColor: function(context) {
+              return context.dataset.backgroundColor;
+            },
+            borderRadius: 16,
+            borderWidth: 1,
+            color: function(context) {
+              return context.hovered ? 'white' : context.dataset.backgroundColor;
+            },
+            font: {
+              weight: 'bold'
+            },
+            offset: 8,
+            formatter: Math.round,
+            listeners: {
+              enter: function(context) {
+                context.hovered = true;
+                return true;
+              },
+              leave: function(context) {
+                context.hovered = false;
+                return true;
+              }
             }
           }
-        }
-      },
-    } 
-}); 
+        },
+      } 
+  }); 
+  
     this.canvas = document.getElementById('myChart2');
     this.ctx = this.canvas.getContext('2d');
     this.myChart2 = new Chart(this.ctx, {
@@ -519,46 +483,34 @@ export class ChartComponent implements OnInit {
       data: {
           labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
           datasets: [{
-              label: 'Clients NF prec year',
-              data: ClientPreNF,
-              backgroundColor: [
-                'rgba(255, 206, 86, 0)',
-              ],
-              borderColor: [
-                'rgba(255, 206, 86, 1)',
-            ],
-              borderWidth: 1
+            label: 'Clients NF prec year',
+            data: ClientPreNF,
+            backgroundColor: ["navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy"],
+            borderColor: ["navy"],
+            borderWidth: 1,
+            fill: false
           },
           {
             label: 'Clients Fid prec year',
             data: ClientPreFid,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-          ],
+            fill: false, 
+            backgroundColor: ["red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red"],
+            borderColor: ["red"],
             borderWidth: 1
         },
           {label: 'Clients NF cur year',
               data: ClientCurNF,
-              backgroundColor: [
-                'rgba(75, 192, 192, 0)',
-              ],
-              borderColor: [
-                'rgba(75, 192, 192, 1)',
-            ],
+              fill: false, 
+              backgroundColor: ["orange", "orange", "orange", "orange", "orange", "orange","orange", "orange", "orange", "orange", "orange", "orange", "orange"],
+              borderColor: ["orange"],
               borderWidth: 1
           },
           {
             label: 'Clients Fid cur year',
             data: ClientCurFid,
-            backgroundColor: [
-              'rgba(54, 162, 235, 0)',
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)',
-          ],
+            fill: false, 
+            backgroundColor: ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green','green', "green"],
+            borderColor: ['green'],
             borderWidth: 1
         }
         ]
@@ -624,25 +576,20 @@ export class ChartComponent implements OnInit {
       data: {
           labels: ["0", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",],
           datasets: [{
-              label: 'Panniers année précédente',
-              data: PanierPre,
-              backgroundColor: [
-                'rgba(255, 206, 86, 0)',
-              ],
-              borderColor: [
-                'rgba(255, 206, 86, 1)',
-            ],
-              borderWidth: 1
+            label: 'Panniers année précédente',
+            data: PanierPre,
+            backgroundColor: ["purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple"],
+            borderColor: ["purple"],
+            borderWidth: 1,
+            fill: false
           },
-          {label: 'Panniers année courante',
-              data: PanierCur,
-              backgroundColor: [
-                'rgba(75, 192, 192, 0)',
-              ],
-              borderColor: [
-                'rgba(75, 192, 192, 1)',
-            ],
-              borderWidth: 1
+          {
+            label: 'Panniers année courante',
+            data: PanierCur,
+            fill: false, 
+            backgroundColor: ["black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black"],
+            borderColor: ["black"],
+            borderWidth: 1
           }
         ]
       },
