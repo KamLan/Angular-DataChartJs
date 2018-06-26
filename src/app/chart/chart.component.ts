@@ -105,6 +105,7 @@ export class ChartComponent implements OnInit {
     this.myChart.destroy();
     this.myChart2.destroy();
     this.myChart3.destroy();
+    this.myChartbar.destroy();
     this.calculus(DateInputPreEL, DateInputCurEL);
   }
 
@@ -214,7 +215,7 @@ export class ChartComponent implements OnInit {
           PanierCur[0]=null
           PanierCur.push(panierValue.toFixed(2));
       }
-  }
+    }
 
   //calcul total CA
     this.CATotalpre = this.CANFtotalpre + this.CAFidtotalpre;
@@ -777,6 +778,5 @@ export class ChartComponent implements OnInit {
   //     }
   // });
 
-  }             
-
+  }
 }

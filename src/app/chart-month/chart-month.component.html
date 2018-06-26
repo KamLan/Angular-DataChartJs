@@ -1,0 +1,133 @@
+<div class="container">
+  <div class="row">
+     <div class="col-md-12" >
+          <form ng-app="example">
+              <div class="form-group" data-ng-controller="JourController as jour">
+                  <label for="exampleInputJour">Choix du mois </label>
+                  <input type="month" #dateInputMonth name="dateInput" id="dateInput" value="2018-05" 
+                  class="form-control" (change)="getMonth(dateInputMonth.value)">
+              </div>
+          </form>
+     </div>
+     <div class="col-md-4 col-4">
+          <div class="card">
+                  <img class="NumberIcon" src="assets/img/coin.png" alt="Card image cap">
+                  <div class="card-body">
+                      <h5 class="card-title">CA</h5>
+                      <!-- <p class="card-text"><b>Année précedente:</b> {{CATotalpre}} euros  -->
+                       <p class="card-text">   <br>  {{CAtotal}}€
+                          <br>  {{CAtotalVar}}%</p>
+                  </div>
+          </div>
+     </div>
+     <div class="col-md-4 col-4">
+          <div class="card" >
+              <img class="NumberIcon" src="assets/img/client.png" alt="Card image cap">
+              <div class="card-body">
+                  <h5 class="card-title">Clients</h5>
+                  <!-- <p class="card-text"><b>Année précedente:</b> {{ClientTotalpre}} Clients -->
+                    <p class="card-text">  <br> {{ClientTotal}}
+                      <br>  {{ClientTotalVar}}%</p>
+              </div>
+          </div>
+     </div>
+     <div class="col-md-4 col-4">
+          <div class="card">
+              <img class="NumberIcon" src="assets/img/basket.png" alt="Card image cap">
+              <div class="card-body">
+                  <h5 class="card-title">Paniers</h5>
+                  <!-- <p class="card-text"><b>Année précedente:</b> {{PanierMoyPre}} euros -->
+                    <p class="card-text">  <br> {{PanierTotal}}€
+                      <br> {{PanierTotalVar}}%</p>
+              </div>
+          </div>
+     </div>
+  </div>
+</div>      
+<div class="col-md-12 charts-container" ng-app="">
+      <div class="container ">
+              <button (click)="displayGraph(1)" class="btn btn-primary">Graphiques</button>
+              <button  (click)="displayGraph(0)" class="btn btn-primary">Données brutes</button>
+          </div>
+          
+          <div class="col-md-12 container display graphsection" [ngClass]="{'active': graph === 1}">
+              <div class="container">
+                  <div class="col-md-12">
+                      <div class="row">
+                          <div class="col-md-6 chart-pie">
+                                  <canvas id="myChart4"></canvas>
+                          </div>
+                          <!-- <div class="col-md-6 chart-pie">
+                                  <canvas id="myChart5"></canvas>
+                          </div> -->
+                          <div class="col-md-6 chart-pie">
+                                  <canvas id="myChart6"></canvas>
+                          </div>
+                          <!-- <div class="col-md-6 chart-pie">
+                                  <canvas id="myChart7"></canvas>
+                          </div> -->
+                      </div>
+                  </div>
+              </div>  
+              <div class="row">
+                  <div class="col-md-12 d-inline-block chart-line">
+                      <canvas id="myChart"></canvas>
+                  </div>
+                  <div class="col-md-12 d-inline-block chart-line">
+                      <canvas id="myChart2"></canvas>
+                  </div>
+                  <div class="col-md-12 d-inline-block chart-line">
+                      <canvas id="myChart3"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md -12 container display" [ngClass]="{'active': graph === 0}" >
+              <div class="col-md-12">
+                  <div class="row">
+                      <div class="col-md-3 col-3">
+                          <h5>Jour</h5>
+                          <div class="card" *ngFor="let arrayJourSemaine of arrayJourSemaines; let i=index"> 
+                                  <div class="card-body">
+                                          <!-- <b>Année précedente:</b> {{arrayDCAhoraires[i][0]}} euros -->
+                                      <p class="card-text horaire-p">
+                                          <b>  {{arrayJourSemaines[i]}}</b>
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="col-md-3 col-3">
+                          <h5>CA</h5>
+                          <div class="card" *ngFor="let arrayDCAjour of arrayDCAjours; let i=index"> 
+                              <div class="card-body">
+                                      <!-- <b>Année précedente:</b> {{arrayDCAhoraires[i][0]}} euros -->
+                                  <p class="card-text">
+                                      <br> {{arrayDCAjours[i][0]}}€
+                                      <br> {{arrayDCAjours[i][1]}}%</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-3">
+                          <h5>Clients</h5> 
+                          <div class="card" *ngFor="let arrayDCCjour of arrayDCCjours; let i=index"> 
+                              <div class="card-body">
+                                      <!-- <b>Année précedente:</b> {{arrayDClienthoraires[i][0]}} Clients -->
+                                  <p class="card-text">
+                                      <br> {{arrayDCCjours[i][0]}}
+                                      <br> {{arrayDCCjours[i][1]}}%</p>
+                              </div>
+                          </div>   
+                      </div>
+                      <div class="col-md-3 col-3">
+                          <h5>Paniers</h5>
+                          <div class="card" *ngFor="let arrayDPjour of arrayDPjours; let i=index"> 
+                                  <div class="card-body">
+                                          <!-- <b>Année précedente:</b> {{arrayDClienthoraires[i][0]}} Clients -->
+                                      <p class="card-text">
+                                          <br> {{arrayDPjours[i][0]}}€
+                                          <br> {{arrayDPjours[i][1]}}%</p>
+                                  </div>
+                              </div>   
+                      </div>
+                  </div>
+              </div>
+          </div>
+</div>

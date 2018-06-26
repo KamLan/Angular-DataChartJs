@@ -4,7 +4,7 @@
             <form ng-app="example">
                 <div class="form-group" data-ng-controller="JourController as jour">
                     <label for="exampleInputJour">Choix du jour </label>
-                    <input type="date" #dateInput name="dateInput" id="dateInput" class="form-control" value="2018-05-25"  (change)="getDay(dateInput.value)">
+                    <input type="date" #dateInput name="dateInput" min="2018-05-25" max="2018-05-31" id="dateInput" class="form-control" value="2018-05-25"  (change)="getDay(dateInput.value)">
                 </div>
             </form>
        </div>

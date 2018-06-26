@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import { ChartWeekComponent } from './chart-week/chart-week.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartMonthComponent } from './chart-month/chart-month.component';
+import { ChartPeriodComponent } from './chart-period/chart-period.component';
 
 
 
@@ -12,7 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     ChartComponent,
-    ChartWeekComponent
+    ChartWeekComponent,
+    ChartMonthComponent,
+    ChartPeriodComponent
   ],
   imports: [
     BrowserModule,
