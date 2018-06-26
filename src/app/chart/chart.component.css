@@ -43,7 +43,7 @@ div[_ngcontent-c1] {
 }
 
 .chart-pie{
-    min-height:150px;
+    min-height:300px;
 }
 
 @media screen and (max-width: 640px) {

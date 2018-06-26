@@ -24,6 +24,8 @@ export class ChartWeekComponent implements OnInit {
   myChart;
   myChart2;
   myChart3;
+  myChart4
+  myChart6
 
   arrayJourSemaines;
   arrayDCAjours;
@@ -599,7 +601,7 @@ export class ChartWeekComponent implements OnInit {
 
   this.canvas = document.getElementById('myChart4');
     this.ctx = this.canvas.getContext('2d');
-    let myChart4 = new Chart(this.ctx, {
+    this.myChart4 = new Chart(this.ctx, {
       type: 'pie',
       data: {
         labels: ["CANF", "CAFid"],
@@ -642,7 +644,7 @@ export class ChartWeekComponent implements OnInit {
 
   this.canvas = document.getElementById('myChart6');
     this.ctx = this.canvas.getContext('2d');
-    let myChart6 = new Chart(this.ctx, {
+    this.myChart6 = new Chart(this.ctx, {
       type: 'pie',
       data: {
         labels: ["clients NF", "Clients Fid"],
@@ -745,7 +747,471 @@ export class ChartWeekComponent implements OnInit {
     var weekNumber = event.slice(-2)
     var yearNumber = event.slice(0, 4)
     var dayOfTheWeek = this.getDateOfISOWeek(weekNumber,yearNumber)
+
+    //Randomization
+    this.randomization()
+
     return dayOfTheWeek;
+  }
+
+  randomization(){
+
+    this.CAtotal = Math.floor((Math.random() * 35000) + 20000);
+    this.ClientTotal = Math.floor((Math.random() * 1500) + 800);
+    this.PanierTotal = Math.floor((Math.random() * 15) + 5);
+    this.CAtotalVar = Math.floor((Math.random() * 40) + -30);
+    this.ClientTotalVar = Math.floor((Math.random() * 50) + -40);
+    this.PanierTotalVar = Math.floor((Math.random() * 50) + -40);
+
+
+    //Données brutes
+    this.arrayJourSemaines=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    this.arrayDCAjours=[[Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 1000) + 100), Math.floor((Math.random() * 50) + -30)]];
+    this.arrayDCCjours=[[Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 150) + 30), Math.floor((Math.random() * 50) + -30)]];
+    this.arrayDPjours=[[Math.floor((Math.random() * 15) + 5), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 15) + 5), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 15) + 4), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 15) + 5), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 25) + 10), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 20) + 15), Math.floor((Math.random() * 50) + -30)],
+    [Math.floor((Math.random() * 15) + 5), Math.floor((Math.random() * 50) + -30)]];
+
+
+    var CANFpre = [null, Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100)]
+    var CAfidpre = [null, Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100)]
+    var CAfidcur = [null, Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100), 
+      Math.floor((Math.random() * 600)+ 100)]
+    var CANFcur = [null, Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100), 
+      Math.floor((Math.random() * 1000)+ 100)]
+    var ClientPreNF = [null, Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70)]
+    var ClientPreFid = [null, Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5)]
+    var ClientCurNF = [null, Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70), 
+      Math.floor((Math.random() * 400)+ 70))]
+    var ClientCurFid = [null, Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5), 
+      Math.floor((Math.random() * 50)+ 5)]
+    var PanierPre = [null, Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5)]
+    var PanierCur = [null, Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5), 
+      Math.floor((Math.random() * 15)+ 5)]
+    var tabCANFtotalcur = [Math.floor((Math.random() * 30000)+ 20000)]
+    var tabCAFidtotalcur = [Math.floor((Math.random() * 3000)+ 2000)]
+    var tabClientTotalPreNF = [Math.floor((Math.random() * 2000)+ 800)]
+    var tabClientTotalPreFid = [Math.floor((Math.random() * 200)+ 80)]
+    this.myChart.destroy();
+    this.myChart2.destroy();
+    this.myChart3.destroy();
+    this.myChart4.destroy();
+    this.myChart6.destroy();
+
+    //Update charts
+        this.canvas = document.getElementById('myChart');
+        this.ctx = this.canvas.getContext('2d');
+        this.myChart = new Chart(this.ctx, {
+          type: 'line',
+          data: {
+              labels: ["0", "Lundi", "Mardi", "Mercredi", "Jeudi", "VEndredi", "Samedi", "Dimanche"],
+              datasets: [{
+                label: 'CA NF prec year',
+                data: CANFpre,
+                backgroundColor: ["navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy"],
+                borderColor: ["navy"],
+                borderWidth: 1,
+                fill: false
+              },
+              {
+                label: 'CA Fid prec year',
+                data: CAfidpre,
+                fill: false, 
+                backgroundColor: ["red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red"],
+                borderColor: ["red"],
+                borderWidth: 1
+            },
+              {
+                label: "CA Fid cur year",
+                data: CAfidcur,
+                fill: false, 
+                backgroundColor: ["orange", "orange", "orange", "orange", "orange", "orange","orange", "orange", "orange", "orange", "orange", "orange", "orange"],
+                borderColor: ["orange"],
+                borderWidth: 1
+              },
+              {
+                label: "CA NF cur year ",
+                data: CANFcur,
+                fill: false, 
+                backgroundColor: ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green','green', "green"],
+                borderColor: ['green'],
+                borderWidth: 1
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Comparaison des CA'
+            },
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            plugins: {
+              datalabels: {
+                backgroundColor: function(context) {
+                  return context.hovered ? context.dataset.backgroundColor : 'white';
+                },
+                borderColor: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderRadius: 16,
+                borderWidth: 1,
+                color: function(context) {
+                  return context.hovered ? 'white' : context.dataset.backgroundColor;
+                },
+                font: {
+                  weight: 'bold'
+                },
+                offset: 8,
+                formatter: Math.round,
+                listeners: {
+                  enter: function(context) {
+                    context.hovered = true;
+                    return true;
+                  },
+                  leave: function(context) {
+                    context.hovered = false;
+                    return true;
+                  }
+                }
+              }
+            },
+          } 
+      }); 
+        this.canvas = document.getElementById('myChart2');
+        this.ctx = this.canvas.getContext('2d');
+        this.myChart2 = new Chart(this.ctx, {
+          type: 'line',
+          data: {
+              labels: ["0", "Lundi", "Mardi", "Mercredi", "Jeudi", "VEndredi", "Samedi", "Dimanche"],
+              datasets: [{
+                  label: 'Clients NF prec year',
+                  data: ClientPreNF,
+                  backgroundColor: ["navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy", "navy"],
+                  borderColor: ["navy"],
+                  borderWidth: 1,
+                  fill: false
+              },
+              {
+                label: 'Clients Fid prec year',
+                data: ClientPreFid,
+                fill: false, 
+                backgroundColor: ["red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red", "red"],
+                borderColor: ["red"],
+                borderWidth: 1
+              },
+              {
+                label: 'Clients NF cur year',
+                data: ClientCurNF,
+                fill: false, 
+                backgroundColor: ["orange", "orange", "orange", "orange", "orange", "orange","orange", "orange", "orange", "orange", "orange", "orange", "orange"],
+                borderColor: ["orange"],
+                borderWidth: 1
+              },
+              {
+                label: 'Clients Fid cur year',
+                data: ClientCurFid,
+                fill: false, 
+                backgroundColor: ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green','green', "green"],
+                borderColor: ['green'],
+                borderWidth: 1
+            }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Comparaison des clients'
+            },
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            plugins: {
+              datalabels: {
+                backgroundColor: function(context) {
+                  return context.hovered ? context.dataset.backgroundColor : 'white';
+                },
+                borderColor: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderRadius: 16,
+                borderWidth: 1,
+                color: function(context) {
+                  return context.hovered ? 'white' : context.dataset.backgroundColor;
+                },
+                font: {
+                  weight: 'bold'
+                },
+                offset: 8,
+                formatter: Math.round,
+                listeners: {
+                  enter: function(context) {
+                    context.hovered = true;
+                    return true;
+                  },
+                  leave: function(context) {
+                    context.hovered = false;
+                    return true;
+                  }
+                }
+              }
+            },
+            // pan: {
+            //   enabled: true,
+            //   mode: 'xy'
+            // },
+            // zoom: {
+            //     enabled: true,
+            //     mode: 'xy',
+            // }
+        }
+      });
+      
+      this.canvas = document.getElementById('myChart3');
+        this.ctx = this.canvas.getContext('2d');
+        this.myChart3 = new Chart(this.ctx, {
+          type: 'line',
+          data: {
+              labels: ["0", "Lundi", "Mardi", "Mercredi", "Jeudi", "VEndredi", "Samedi", "Dimanche"],
+              datasets: [{
+                label: 'Panniers année précédente',
+                data: PanierPre,
+                backgroundColor: ["purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple", "purple"],
+                borderColor: ["purple"],
+                borderWidth: 1,
+                fill: false
+              },
+              {
+                label: 'Panniers année courante',
+                data: PanierCur,
+                backgroundColor: ["black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black"],
+                borderColor: ["black"],
+                borderWidth: 1,
+                fill: false
+              }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Comparaison des paniers'
+            },
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            plugins: {
+              datalabels: {
+                backgroundColor: function(context) {
+                  return context.hovered ? context.dataset.backgroundColor : 'white';
+                },
+                borderColor: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderRadius: 16,
+                borderWidth: 1,
+                color: function(context) {
+                  return context.hovered ? 'white' : context.dataset.backgroundColor;
+                },
+                font: {
+                  weight: 'bold'
+                },
+                offset: 8,
+                formatter: Math.round,
+                listeners: {
+                  enter: function(context) {
+                    context.hovered = true;
+                    return true;
+                  },
+                  leave: function(context) {
+                    context.hovered = false;
+                    return true;
+                  }
+                }
+              }
+            },
+            // pan: {
+            //   enabled: true,
+            //   mode: 'xy'
+            // },
+            // zoom: {
+            //     enabled: true,
+            //     mode: 'xy',
+            // }
+        }
+      }); 
+    
+      this.canvas = document.getElementById('myChart4');
+        this.ctx = this.canvas.getContext('2d');
+        this.myChart4 = new Chart(this.ctx, {
+          type: 'pie',
+          data: {
+            labels: ["CANF", "CAFid"],
+            datasets: [
+              {
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: [tabCANFtotalcur, tabCAFidtotalcur]
+              }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Difference CA Fid/NF current year'
+            },
+            plugins: {
+              datalabels: {
+                backgroundColor: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderColor: 'white',
+                borderRadius: 25,
+                borderWidth: 2,
+                color: 'white',
+                display: function(context) {
+                  var dataset = context.dataset;
+                  var count = dataset.data.length;
+                  var value = dataset.data[context.dataIndex];
+                  return value > count * 1.5;
+                },
+                font: {
+                  weight: 'bold'
+                },
+                formatter: Math.round
+              }
+            },
+            maintainAspectRatio: false,
+          }
+      });
+    
+      this.canvas = document.getElementById('myChart6');
+        this.ctx = this.canvas.getContext('2d');
+        this.myChart6 = new Chart(this.ctx, {
+          type: 'pie',
+          data: {
+            labels: ["clients NF", "Clients Fid"],
+            datasets: [
+              {
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: [tabClientTotalPreNF, tabClientTotalPreFid]
+              }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Difference Clients Fid/NF current year'
+            },
+            plugins: {
+              datalabels: {
+                backgroundColor: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderColor: 'white',
+                borderRadius: 25,
+                borderWidth: 2,
+                color: 'white',
+                display: function(context) {
+                  var dataset = context.dataset;
+                  var count = dataset.data.length;
+                  var value = dataset.data[context.dataIndex];
+                  return value > count * 1.5;
+                },
+                font: {
+                  weight: 'bold'
+                },
+                formatter: Math.round
+              }
+            },
+            maintainAspectRatio: false,
+          }
+      });
+    
   }
 
   ngOnInit() {

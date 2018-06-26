@@ -43,7 +43,7 @@ div[_ngcontent-c1] {
 }
 
 .chart-pie{
-    min-height:150px;
+    min-height:300px;
 }
 
 @media screen and (max-width: 640px) {
@@ -61,6 +61,9 @@ div[_ngcontent-c1] {
     }
     .col-md-3.col-3{
         padding:0;
+    }
+    .col-md-3.col-3 div{
+        width:100%;
     }
     .col-md-3.col-3 .card-body{
         padding:0;
